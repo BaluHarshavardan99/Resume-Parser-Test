@@ -28,18 +28,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1  # Replace with your AWS region
 
-      # Step 4: Install AWS SAM CLI
+      # Step 4: Install dependencies from requirements.txt
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 5: Install AWS SAM CLI
       - name: Install AWS SAM CLI
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip
           pip install aws-sam-cli
 
-      # Step 5: Build the SAM application
+      # Step 6: Build the SAM application
       - name: Build SAM Application
         run: sam build
 
-      # Step 6: Deploy the SAM application
+      # Step 7: Deploy the SAM application
       - name: Deploy SAM Application
         run: |
           sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
