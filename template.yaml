@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  ResumeParserApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.main.lambda_handler
+      Runtime: python3.9
+      CodeUri: .
+      MemorySize: 128
+      Timeout: 15
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          STAGE: "prod"
+      Events:
+        ApiGateway:
+          Type: Api
+          Properties:
+            Path: /upload-pdf
+            Method: POST
+
+Outputs:
+  ApiUrl:
+    Description: "URL for the Resume Parser API"
+    Value: !Sub "https://${ResumeParserApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/upload-pdf"

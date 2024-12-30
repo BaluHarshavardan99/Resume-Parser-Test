@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pdfplumber
+python-docx
+boto3
+aws-lambda-powertools
