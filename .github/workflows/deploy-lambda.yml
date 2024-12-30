@@ -14,7 +14,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up AWS credentials
+      # Step 2: Install Python 3.9
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Set up AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -22,18 +28,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1  # Replace with your AWS region
 
-      # Step 3: Install AWS SAM CLI
+      # Step 4: Install AWS SAM CLI
       - name: Install AWS SAM CLI
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip
           pip install aws-sam-cli
 
-      # Step 4: Build the SAM application
+      # Step 5: Build the SAM application
       - name: Build SAM Application
         run: sam build
 
-      # Step 5: Deploy the SAM application
+      # Step 6: Deploy the SAM application
       - name: Deploy SAM Application
         run: |
           sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
