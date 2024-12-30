@@ -24,4 +24,4 @@ Resources:
 Outputs:
   ApiUrl:
     Description: "URL for the Resume Parser API"
-    Value: !Sub "https://${ResumeParserApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/upload-pdf"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/upload-pdf"
