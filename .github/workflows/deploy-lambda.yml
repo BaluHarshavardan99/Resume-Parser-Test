@@ -51,4 +51,5 @@ jobs:
           sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
                      --stack-name my-backend-stack \
                      --capabilities CAPABILITY_IAM \
-                     --region us-east-1  # Replace with your AWS region
+                     --region us-east-1 \
+                     --resolve-s3
