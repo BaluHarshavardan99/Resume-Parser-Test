@@ -5,3 +5,4 @@ python-docx
 boto3
 aws-lambda-powertools
 mangum
+python-multipart
