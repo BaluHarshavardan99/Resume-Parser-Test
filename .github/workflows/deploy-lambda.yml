@@ -1,0 +1,42 @@
+name: Deploy Lambda on Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up AWS credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Replace with your AWS region
+
+      # Step 3: Install AWS SAM CLI
+      - name: Install AWS SAM CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip install aws-sam-cli
+
+      # Step 4: Build the SAM application
+      - name: Build SAM Application
+        run: sam build
+
+      # Step 5: Deploy the SAM application
+      - name: Deploy SAM Application
+        run: |
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
+                     --stack-name my-backend-stack \
+                     --capabilities CAPABILITY_IAM \
+                     --region us-east-1  # Replace with your AWS region
